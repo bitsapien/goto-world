@@ -12,6 +12,11 @@
 /* TODO
  * Add option to use last executed command as input to "add"
  * Add bash autocomplete
+ * Remove the need to do init 
+ * Support params
+ * Support non-url kind of commands
+ * Support special actions like @
+ * List commands
  */
 
 const fs = require('fs');
