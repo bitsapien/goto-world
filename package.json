@@ -1,0 +1,25 @@
+{
+  "name": "goto-world",
+  "version": "0.0.1",
+  "description": "Open commonly used programs, files, URLs via the shell, fast.",
+  "main": "./src/index.js",
+  "bin": {
+    "goto": "./src/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/bitsapien/goto-world.git"
+  },
+  "keywords": [
+    "shell"
+  ],
+  "author": "bitsapien",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bitsapien/goto-world/issues"
+  },
+  "homepage": "https://github.com/bitsapien/goto-world#readme"
+}
