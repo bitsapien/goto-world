@@ -6,17 +6,19 @@
 
 /* The command will have the following options:
  * 1. init                     - Initialises a file for command config 
- * 2. add <shortcut> <command> - Add the command
+ * 2. add <shortcut> <command> - Add command
+ * 3. rm <shortcut>            - Remove command
+ * 3. ls                       - List commands
  */
 
 /* TODO
  * Add option to use last executed command as input to "add"
  * Add bash autocomplete
- * Remove the need to do init 
  * Support params
  * Support non-url kind of commands
  * Support special actions like @
- * List commands
+ * Add version to file and move commands into another object
+ * Add automated tests for each command
  */
 
 const fs = require('fs');
@@ -24,6 +26,11 @@ const url = require('url');
 // constants.js
 const xdgDataHomePath = (process.env.XDG_DATA_HOME ?? process.env.HOME + "/.local/share") + "/goto-world";
 const DATA_FILE = "data.json";
+const COMMANDS = [
+  {command: 'add', desc: "Add a shortcut", usage: 'goto add <shortcut> <value>' }, 
+  {command: 'rm',  desc: "Remove a shortcut", usage: 'goto rm <shortcut>' }, 
+  {command: 'ls', desc: "List all shortcuts.", usage: 'goto ls' }
+];
 // lib.js
 function readJSONFile(filePath) {
   try {
@@ -65,22 +72,64 @@ function executeCommand(data, key, params) {
   return 
 } 
 
+function help() {
+  console.table(
+    COMMANDS.map(command => {
+      return {
+        "Option": command.command,
+        "Usage": command.usage,
+        "Description": command.desc,
+      };
+    })
+  );
+}
+
 function add(data, key, value) {
+  if(COMMANDS.map((a)=> a.command).includes(key)) {
+    console.error(`${key} is a reserved keyword, use something else.`);
+    return;
+  }
   data[key] = value;
   fs.writeFile(`${xdgDataHomePath}/${DATA_FILE}`, JSON.stringify(data), (err) => {
     if (err) {
       console.error('Error writing file:', err);
     } else {
-      console.log('File has been written successfully.');
+      console.log(`Added ${key} to list, use \`goto ls\` to check.`);
     }
   });
   
+}
+
+function rm(data, key) {
+  if(!data[key]) {
+    console.log(`Shortcut: ${key} not found`);
+    return;
+  }
+  delete data[key];
+  fs.writeFile(`${xdgDataHomePath}/${DATA_FILE}`, JSON.stringify(data), (err) => {
+    if (err) {
+      console.error('Error writing file:', err);
+    } else {
+      console.log(`Deleted ${key} from list, use \`goto ls\` to check.`);
+    }
+  });
+  
+}
+
+function list(data) {
+  console.table(Object.keys(data).map(shortcut => ({
+    "Shortcut": shortcut,
+    "Destination": data[shortcut],
+  })))
 }
 
 function init(datapath, filepath) {
   // Create a folder
   fs.mkdir(datapath, (err) => {
     if (err) {
+      if(err.code === "EEXIST") {
+        return
+      }
       console.error('Error creating folder:', err);
       return;
     }
@@ -104,25 +153,26 @@ const firstArg = args[0];
 const secondArg = args[1];
 const thirdArg = args[2];
 
-let data;
-if(firstArg !== "init") {
-  // look for file, show error and ask to run init.
-  data = readJSONFile(`${xdgDataHomePath}/${DATA_FILE}`);
-  if(!data)
-    return
-}
-
+// init if not found
+init(xdgDataHomePath, DATA_FILE);
+const data = readJSONFile(`${xdgDataHomePath}/${DATA_FILE}`);
 
 // Switch based on command
 switch(firstArg) {
-  case 'init':
-    init(xdgDataHomePath, DATA_FILE);
+  case 'help':
+    help();
     break;
   case 'add':
-    add(data, secondArg, thirdArg)
+    add(data, secondArg, thirdArg);
+    break;
+  case 'ls':
+    list(data);
+    break;
+  case 'rm':
+    rm(data, secondArg);
     break;
   default:
-    executeCommand(data, firstArg, secondArg)
+    executeCommand(data, firstArg, secondArg);
 }
 // Define schema of data file
 // ** add <shortcut> <command> **
