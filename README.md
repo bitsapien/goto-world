@@ -14,18 +14,25 @@ alias goto=g
 ```
 
 ## Usage
-
-* 🚀 Initialize the data file that holds all your commands
-  ```sh
-  goto init
-  ```
-* ➕ Add new commands 
+* ➕ Add new shortcuts 
   ```sh
   goto add cal https://calendar.google.com/
   ```
-* 😎 Use the command to open up your calendar
+* 😎 Use the shortcut to open up your calendar
   ```sh 
   goto cal
+  ```
+* 📜 List all shortcuts
+  ```sh
+  goto ls
+  ```
+* ❎ Remove a shortcut
+  ```sh
+  goto rm cal
+  ```
+* 😿 Help
+  ```sh
+  goto help
   ```
 
 
