@@ -39,7 +39,7 @@ alias goto=g
 ## Known Issues 😾
 
 1. The solution currently only works on Macs.
-2. It only can open URLs for the moment.
+2. It only can open URLs for the moment and run shell commands at the moment.
 
 
 ## Contributions
