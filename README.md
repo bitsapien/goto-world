@@ -26,7 +26,7 @@ alias goto=g
 * Use the command to open up your calendar
   ```sh 
   goto cal
-  ``
+  ```
 
 
 
