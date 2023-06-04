@@ -1,5 +1,5 @@
 {
-  "name": "goto-world",
+  "name": "goto-world-js",
   "version": "0.0.1",
   "description": "Open commonly used programs, files, URLs via the shell, fast.",
   "main": "./src/index.js",
