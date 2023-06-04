@@ -41,6 +41,11 @@ alias goto=g
 1. The solution currently only works on Macs.
 2. It only can open URLs for the moment.
 
-Feel free to contribute to the project, if you find it useful. 😻
+
+## Contributions
+Feel free to contribute to the project. 😻
+
+No guide at the moment, the project is pretty nascent. See a list of [TODOs](https://github.com/bitsapien/goto-world/blob/main/bin/index.js#L14).
+
 
 
