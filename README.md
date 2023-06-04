@@ -41,5 +41,6 @@ alias goto=g
 1. The solution currently only works on Macs.
 2. It only can open URLs for the moment.
 
+Feel free to contribute to the project, if you find it useful. 😻
 
 
