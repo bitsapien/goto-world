@@ -14,23 +14,23 @@ alias goto=g
 ```
 
 ## Usage
-* ➕ Add new shortcuts 
+#### ➕ Add new shortcuts 
   ```sh
   goto add cal https://calendar.google.com/
   ```
-* 😎 Use the shortcut to open up your calendar
+#### 😎 Use the shortcut to open up your calendar
   ```sh 
   goto cal
   ```
-* 📜 List all shortcuts
+#### 📜 List all shortcuts
   ```sh
   goto ls
   ```
-* ❎ Remove a shortcut
+#### ❎ Remove a shortcut
   ```sh
   goto rm cal
   ```
-* 😿 Help
+#### 😿 Help
   ```sh
   goto help
   ```
