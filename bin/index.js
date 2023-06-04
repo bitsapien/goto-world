@@ -1,16 +1,5 @@
 #!/usr/bin/env node
 
-/* *******************************************************************  
- * Design
- * ******************************************************************/
-
-/* The command will have the following options:
- * 1. init                     - Initialises a file for command config 
- * 2. add <shortcut> <command> - Add command
- * 3. rm <shortcut>            - Remove command
- * 3. ls                       - List commands
- */
-
 /* TODO
  * Add option to use last executed command as input to "add"
  * Add bash autocomplete
@@ -19,6 +8,10 @@
  * Support special actions like @
  * Add version to file and move commands into another object
  * Add automated tests for each command
+ * Analyse bash histroy or zsh history and suggest commands to add
+ * Give an option to select type of command
+ * Create a version for browsers that does the same
+ * Did you mean, for close matches
  */
 
 const fs = require('fs');
@@ -67,8 +60,22 @@ function executeCommand(data, key, params) {
       }
       console.log(`stdout: ${stdout}`); 
     })
+  } else if(data[key]) {
+    // assuming it's a shell command
+    exec(`${data[key]}`, (error, stdout, stderr) => {
+      if (error) {
+        console.log(`error: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.log(`stderr: ${stderr}`);
+        return;
+      }
+      console.log(`stdout: ${stdout}`); 
+    })
+  } else {
+    console.error(`${key} not found. Add it? \n goto add ${key} <value>`)
   }
-  
   return 
 } 
 
